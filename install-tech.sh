@@ -164,9 +164,9 @@ else
 	BIN_DIR="C:\\Program Files (x86)"
 
 	# Install binary
-	echo "Installing the tech directory to $BIN_DIR\\Loom\\share..."
-	if mkdir -p "$BIN_DIR\\Loom\\share"; then
-	  chmod -R ug+rw "$BIN_DIR\\Loom\\share\\tech"
+	echo "Installing the tech directory to $BIN_DIR\\Bok\\share..."
+	if mkdir -p "$BIN_DIR\\Bok\\share"; then
+	  chmod -R ug+rw "$BIN_DIR\\Bok\\share\\tech"
 	else
 	  echo "Failed to install. Please check permissions and try again."
 	  exit 1

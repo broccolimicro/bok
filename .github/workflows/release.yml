@@ -13,14 +13,14 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         include:
           - os: ubuntu-latest
-            from: "lm-linux.deb"
-            to: "lm-linux.deb"
+            from: "bok-linux.deb"
+            to: "bok-linux.deb"
           - os: macos-latest
-            from: "lm-macos.tar.gz"
-            to: "lm-macos.tar.gz"
+            from: "bok-macos.tar.gz"
+            to: "bok-macos.tar.gz"
           - os: windows-latest
-            from: "lm-windows.zip"
-            to: "lm-windows.zip"
+            from: "bok-windows.zip"
+            to: "bok-windows.zip"
 
     steps:
       - name: Checkout code for workflow_dispatch

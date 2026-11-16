@@ -62,4 +62,4 @@ help you understand *why* things are the way they are.
 
 ## Version 0.15
 
-This documentation covers the [lastest version of Loom](https://github.com/broccolimicro/loom), **v0.15**.
+This documentation covers the [lastest version of Bok](https://github.com/broccolimicro/bok), **v0.15**.

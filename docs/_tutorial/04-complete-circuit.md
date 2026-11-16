@@ -150,7 +150,7 @@ The `and` operator runs all three processes in parallel, with data flowing throu
 Compile your complete circuit:
 
 ```bash
-lm build alu.weaver
+bok build alu.weaver
 ```
 
 If there are errors, check:
@@ -163,7 +163,7 @@ If there are errors, check:
 See the complete system structure:
 
 ```bash
-lm show alu.weaver -o alu-system.dot
+bok show alu.weaver -o alu-system.dot
 ```
 
 Then render it:
@@ -177,7 +177,7 @@ dot -Tpng alu-system.dot -o alu-system.png
 Run a simulation to see the behavior:
 
 ```bash
-lm sim alu.weaver
+bok sim alu.weaver
 ```
 
 ## Step 8: Understanding the Design

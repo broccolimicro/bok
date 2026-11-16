@@ -7,7 +7,7 @@ layout: post
 ---
 
 This document describes the desired minimal functionality for the Weaver language for
-v1.0.0 of Loom.
+v1.0.0 of Bok.
 
 Weaver is a hardware description language whose mission is to make it easy for
 software engineers to design high-quality complex computer architectures. It

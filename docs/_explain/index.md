@@ -53,7 +53,7 @@ untangle virtualization at compile time.
 It provides a sequential execution model that people can reason about while
 mapping directly to physical hardware.
 
-![test]({{site.baseurl}}/images/loom.svg)
+![test]({{site.baseurl}}/images/bok.svg)
 
 Weaver looks and feels like a modern software language, abstracting the
 hardware-level semantics into a more familiar execution model. This drives

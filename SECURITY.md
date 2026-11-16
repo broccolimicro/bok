@@ -13,4 +13,4 @@ currently being supported with security updates.
 
 For supported versions, please email vulnerability reports to edward.bingham@broccolimicro.io
 and you will receive a response within 24 hours with details about accept/decline, priority, and timeline.
-Currently, Loom is pre-alpha and security support will not start until after the alpha release.
+Currently, Bok is pre-alpha and security support will not start until after the alpha release.

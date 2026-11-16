@@ -35,14 +35,14 @@ func MergeOr(chan InA, InB, Out) {
 Explanation:
 
 - `await InA { ... } or await InB { ... }` Executes exactly one branch. If both
-  channels are ready simultaneously, Loom signals an error.
+  channels are ready simultaneously, Bok signals an error.
 - `Out.send(...)` sends the processed value to the output channel.
 
 ## Step 3: Compile and Simulate Deterministic Selection
 
 ```bash
-lm build
-lm sim "select:MergeOr(chan)"
+bok build
+bok sim "select:MergeOr(chan)"
 ```
 
 In the simulator, send values on `InA` and `InB` to see how the process reacts.
@@ -85,8 +85,8 @@ func NonDeterministic(chan ReqA, ReqB) {
 ## Step 5: Compile and Simulate Non-Deterministic Choice
 
 ```bash
-lm build
-lm sim "selection-demo:NonDeterministic(chan,chan)"
+bok build
+bok sim "selection-demo:NonDeterministic(chan,chan)"
 ```
 
 Send requests on `ReqA` and `ReqB`:
@@ -119,8 +119,8 @@ func Combined(chan In, Out, Flag) {
 ## Step 7: Build and Run the Combined Example
 
 ```bash
-lm build
-lm sim "selection-demo:Combined(chan,chan,chan)"
+bok build
+bok sim "selection-demo:Combined(chan,chan,chan)"
 ```
 
 ```bash
@@ -135,7 +135,7 @@ lm sim "selection-demo:Combined(chan,chan,chan)"
 ## Step 8: Inspect Internal Representation
 
 ```bash
-lm show "selection-demo:Combined(chan,chan,chan)"
+bok show "selection-demo:Combined(chan,chan,chan)"
 ```
 
 Generates a Petri-net visualization of guards and choices.

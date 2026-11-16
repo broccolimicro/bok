@@ -4,11 +4,11 @@ _site
 coverage_merged.info
 coverage_report_all
 Gemfile.lock
-lm.mod
+bok.mod
 __pycache__
 *.astg
 *.pdf
-lm
+bok
 *.deb
 *.zip
 *.gds

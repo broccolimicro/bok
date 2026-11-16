@@ -6,7 +6,7 @@ category: Language
 layout: post
 ---
 
-Loom supports multiple different dialects or languages for different stages of the synthesis.
+Bok supports multiple different dialects or languages for different stages of the synthesis.
 
 **Weaver (Wv)** Write your behavioral specifications in Weaver. You behavior will then
 be broken into processes and pipeline stages during synthesis. The semantics

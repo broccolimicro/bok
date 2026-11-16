@@ -6,7 +6,7 @@ module Rouge
 	module Lexers
 		class Weaver < RegexLexer
 			title "Weaver"
-			desc "Weaver / Loom language"
+			desc "Weaver / Bok language"
 			tag 'weaver'
 			filenames '*.wv', '*.weaver'
 

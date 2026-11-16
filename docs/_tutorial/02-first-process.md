@@ -24,7 +24,7 @@ Let's create a process that receives numbers and emits the entire Collatz sequen
 > There are still quite a few bugs to work through in synthesis, this will generate a lot of errors and produce incorrect results.
 
 > [!WARNING]
-> Loom does not yet have a true type system or support for templates. There is only a very basic set of types with manual bitwidths at the moment: `chan`, `fixed`, `ufixed`, `bool`.
+> Bok does not yet have a true type system or support for templates. There is only a very basic set of types with manual bitwidths at the moment: `chan`, `fixed`, `ufixed`, `bool`.
 
 ```weaver
 func Collatz(chan In, Out) {
@@ -57,7 +57,7 @@ Let's examine each part:
 Compile your process:
 
 ```bash
-lm build
+bok build
 ```
 
 If successful, you should see no errors. The compiled Verilog will be in
@@ -66,7 +66,7 @@ If successful, you should see no errors. The compiled Verilog will be in
 You can also list your modules:
 
 ```bash
-lm mod show
+bok mod show
 ```
 
 This will show:
@@ -127,7 +127,7 @@ The processes run in parallel, with data flowing from Counter to Collatz.
 ## Step 4: Build the System
 
 ```bash
-lm build
+bok build
 ```
 
 This compiles the entire system. You'll find:
@@ -139,7 +139,7 @@ This compiles the entire system. You'll find:
 See all available modules:
 
 ```bash
-lm mod show
+bok mod show
 ```
 
 This will show:
@@ -154,7 +154,7 @@ top:top(chan)
 To generate a guarded petri-net image for all processes:
 
 ```bash
-lm show
+bok show
 ```
 
 This will create:
@@ -168,7 +168,7 @@ build/dbg/Counter.png
 Or you can see a single process
 
 ```bash
-lm show "top:Collatz(chan,chan)"
+bok show "top:Collatz(chan,chan)"
 ```
 
 which will create

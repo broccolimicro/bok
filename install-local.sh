@@ -17,7 +17,7 @@ if [ "$OS" = "Linux" ]; then
 	echo "Installing package..."
 	echo "The following commands will be run with elevated privileges (sudo):"
 	echo ""
-	echo "  dpkg -i lm-linux.deb"
+	echo "  dpkg -i bok-linux.deb"
 	echo "  groupadd cad # if needed"
 	echo "  usermod -aG cad \"$USER_NAME\""
 	echo "  mkdir -p \"$SHARE_DIR\""
@@ -36,7 +36,7 @@ if [ "$OS" = "Linux" ]; then
 	sudo USER_NAME="$USER_NAME" SHARE_DIR="$SHARE_DIR" sh <<EOF
 set -e
 
-dpkg -i "lm-linux.deb"
+dpkg -i "bok-linux.deb"
 
 if ! getent group cad >/dev/null; then
 	groupadd cad
@@ -54,7 +54,7 @@ EOF
 	echo "You must log out and back in (or start a new login session)"
 	echo "before the new group membership takes effect."
 	echo ""
-	echo "After login, you can now use the 'lm' command."
+	echo "After login, you can now use the 'bok' command."
 elif [ "$OS" = "Darwin" ]; then
 	# Define target directories
 	BIN_DIR="/usr/local/bin"
@@ -62,7 +62,7 @@ elif [ "$OS" = "Darwin" ]; then
 	TEMP_DIR="$(mktemp -d)"
 
 	echo "Extracting files..."
-	if tar -xzf "lm-macos.tar.gz" -C "$TEMP_DIR"; then
+	if tar -xzf "bok-macos.tar.gz" -C "$TEMP_DIR"; then
 	  echo "Extraction complete."
 	else
 	  echo "Failed to extract files. Exiting."
@@ -89,15 +89,15 @@ elif [ "$OS" = "Darwin" ]; then
 	echo "Installing package..."
 	echo "The following actions will be performed with sudo:"
 	echo ""
-	echo "  cp \"$TEMP_DIR/lm-macos/bin/lm\" \"$BIN_DIR\""
-	echo "  chmod +x \"$BIN_DIR/lm\""
+	echo "  cp \"$TEMP_DIR/bok-macos/bin/bok\" \"$BIN_DIR\""
+	echo "  chmod +x \"$BIN_DIR/bok\""
 	echo "  mkdir -p \"$SHARE_DIR\""
 
 	if [ "$OVERWRITE" = "1" ]; then
 		echo "  rm -rf \"$SHARE_DIR/tech\""
-		echo "  cp -r \"$TEMP_DIR/lm-macos/share/tech\" \"$SHARE_DIR\""
+		echo "  cp -r \"$TEMP_DIR/bok-macos/share/tech\" \"$SHARE_DIR\""
 	elif [ ! -d "$SHARE_DIR/tech" ]; then
-		echo "  cp -r \"$TEMP_DIR/lm-macos/share/tech\" \"$SHARE_DIR\""
+		echo "  cp -r \"$TEMP_DIR/bok-macos/share/tech\" \"$SHARE_DIR\""
 	else
 		echo "  (keeping existing \"$SHARE_DIR/tech\")"
 	fi
@@ -119,16 +119,16 @@ elif [ "$OS" = "Darwin" ]; then
 	sudo OVERWRITE="$OVERWRITE" USER_NAME="$USER_NAME" TEMP_DIR="$TEMP_DIR" SHARE_DIR="$SHARE_DIR" sh <<EOF
 set -e
 
-cp \"$TEMP_DIR/lm-macos/bin/lm\" \"$BIN_DIR\"
-chmod +x \"$BIN_DIR/lm\"
+cp \"$TEMP_DIR/bok-macos/bin/bok\" \"$BIN_DIR\"
+chmod +x \"$BIN_DIR/bok\"
 
 mkdir -p "$SHARE_DIR"
 
 if [ "\$OVERWRITE" = "1" ]; then
 	rm -rf "$SHARE_DIR/tech"
-	cp -r \"$TEMP_DIR/lm-macos/share/tech\" \"$SHARE_DIR\"
+	cp -r \"$TEMP_DIR/bok-macos/share/tech\" \"$SHARE_DIR\"
 elif [ ! -d "$SHARE_DIR/tech" ]; then
-	cp -r \"$TEMP_DIR/lm-macos/share/tech\" \"$SHARE_DIR\"
+	cp -r \"$TEMP_DIR/bok-macos/share/tech\" \"$SHARE_DIR\"
 fi
 
 chown -R root:staff "$SHARE_DIR/tech"
@@ -140,14 +140,14 @@ EOF
 
 	# Post-install message
 	echo "Installation complete!"
-	echo "You can now use the 'lm' command."
+	echo "You can now use the 'bok' command."
 else
 	# Define target directories
 	BIN_DIR="C:\\Program Files (x86)"
 	TEMP_DIR="$(mktemp -d)"
 
 	echo "Extracting files..."
-	if unzip "lm-windows.zip" -d "$TEMP_DIR"; then
+	if unzip "bok-windows.zip" -d "$TEMP_DIR"; then
 	  echo "Extraction complete."
 	else
 	  echo "Failed to extract files. Exiting."
@@ -155,18 +155,18 @@ else
 	fi
 
 	# Install binary
-	echo "Installing Loom to $BIN_DIR..."
-	if cp -r "$TEMP_DIR/Loom" "$BIN_DIR/"; then
-	  chmod +x "$BIN_DIR/Loom/bin/lm"
-	  chmod -R ug+rw "$BIN_DIR/Loom/share/tech"
-	  echo "Loom installed successfully."
+	echo "Installing Bok to $BIN_DIR..."
+	if cp -r "$TEMP_DIR/Bok" "$BIN_DIR/"; then
+	  chmod +x "$BIN_DIR/Bok/bin/bok"
+	  chmod -R ug+rw "$BIN_DIR/Bok/share/tech"
+	  echo "Bok installed successfully."
 	else
-	  echo "Failed to install Loom. Please check permissions and try again."
+	  echo "Failed to install Bok. Please check permissions and try again."
 	  exit 1
 	fi
 
 	# Post-install message
 	echo "Installation complete!"
-	echo "You can now use the 'lm' command."
+	echo "You can now use the 'bok' command."
 fi
 

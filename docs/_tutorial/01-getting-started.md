@@ -11,30 +11,30 @@ learn the basics of the Weaver toolchain.
 
 ## What You'll Learn
 
-- How to install Loom
+- How to install Bok
 - How to set up a Weaver project
 - Basic Weaver syntax
 - How to compile and simulate your code
 - The structure of a simple Weaver program
 
-## Step 1: Install Loom
+## Step 1: Install Bok
 
-Loom is the circuit compiler for Weaver. Install it using the install script:
+Bok is the circuit compiler for Weaver. Install it using the install script:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/broccolimicro/loom/refs/heads/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/broccolimicro/bok/refs/heads/main/install.sh | bash
 ```
 
 This downloads the appropriate binaries for your system and places them in
-`/usr/local` (or `C:\Program Files (x86)\Loom` on Windows).
+`/usr/local` (or `C:\Program Files (x86)\Bok` on Windows).
 
 Verify the installation:
 
 ```bash
-lm help
+bok help
 ```
 
-You should see the Loom help text with available commands.
+You should see the Bok help text with available commands.
 
 ## Step 2: Initialize a Project
 
@@ -44,10 +44,10 @@ you want to create your project:
 ```bash
 mkdir hello
 cd hello
-lm mod init hello
+bok mod init hello
 ```
 
-This creates a new Loom module in the current directory.
+This creates a new Bok module in the current directory.
 
 ## Step 3: Write Your First Program
 
@@ -95,32 +95,32 @@ wrapping back to 0 after 255.
 
 ## Step 4: Build Your Program
 
-Compile your Weaver program using Loom:
+Compile your Weaver program using Bok:
 
 ```bash
-lm build
+bok build
 ```
 
-By default, `lm build` looks for `top.wv` in the root directory of the project,
-which is the directory that contains `lm.mod`. This will:
+By default, `bok build` looks for `top.wv` in the root directory of the project,
+which is the directory that contains `bok.mod`. This will:
 1. Parse your program
 2. Synthesize it into Verilog (for data-level specifications)
 3. Generate output files in the `build/` directory
 
 The compiled Verilog will be in `build/rtl/Counter.v`.
 
-If there are any syntax errors, `lm build` will report them. Fix any errors and try again.
+If there are any syntax errors, `bok build` will report them. Fix any errors and try again.
 
 > [!WARNING]
 > There are still quite a few bugs to work through in synthesis, this is a work in progress.
 
 ## Step 6: List All Processes
 
-`lm mod` provides an easy way to see all of the processes defined in your
+`bok mod` provides an easy way to see all of the processes defined in your
 module.
 
 ```bash
-lm mod show
+bok mod show
 ```
 
 The **prototypes** shown can be used to select that process for
@@ -133,11 +133,11 @@ top:Counter(chan)
 ## Step 5: Inspecting the Compilation
 
 Internally, the process is represented as a guarded petri-net. You can
-visualize that internal representation with `lm show`, generating
+visualize that internal representation with `bok show`, generating
 `Counter.png`.
 
 ```bash
-lm show "top:Counter(chan)"
+bok show "top:Counter(chan)"
 ```
 
 ## What's Next?
@@ -155,6 +155,6 @@ Continue to [Building Your First Process](./first-process) to learn more.
 - **Channels** (`chan`) are used to send data between processes
 - **Function syntax**: `func name(chan Input1, Input2) chan Output` - input channels before return type, output channel as return type
 - **Variables** declared before the loop are initialized during reset
-- **`lm build`** compiles your Weaver code into hardware (looks for `top.wv` by default)
+- **`bok build`** compiles your Weaver code into hardware (looks for `top.wv` by default)
 - **Output files** are placed in `build/rtl/` for Verilog or `build/ckt/` for production rules
-- **`lm mod show`** lists all modules and functions in your project
+- **`bok mod show`** lists all modules and functions in your project

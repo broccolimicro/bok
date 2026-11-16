@@ -27,7 +27,7 @@ ignored during parsing.
 
 ## Data Types
 
-There are currently only three data types supported by Loom. A **node**
+There are currently only three data types supported by Bok. A **node**
 is a single wire in the circuit. A **variable** is an integer type
 encoded on a collection of nodes. A **channel** facilitates
 communication between processes with a request, acknowledge or request,
@@ -112,7 +112,7 @@ If `G0` do `P0`, if `G1` do `P1`, ... If `Gn` do `Pn`, else wait.
 
 ## Repetition
 
-Repetition behaves almost the same as the non-repetitive selection
+Repetition behaves abokost the same as the non-repetitive selection
 statement. Think of it like a while loop. While one of the guards
 `(G0,G1,...,Gn)` is true, execute the associated process `(P0,P1,...,Pn)`.
 Else, exit the loop.
@@ -182,7 +182,7 @@ will start unknown and transition to `Vdd` after the assignment `a+`.
 ## Reset Behavior
 
 Because reset behavior can be a complex thing that has a multitude of timing
-assumptions and different possible implementations, Loom has a very basic
+assumptions and different possible implementations, Bok has a very basic
 reset implementation. As long as there isn't any choice to be made, and we
 don't enter a repetition, execute transitions and accumulate their affect on
 the state into a reset state. Here is an example:

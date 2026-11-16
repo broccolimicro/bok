@@ -1,10 +1,10 @@
-# Loom &nbsp; [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13992088.svg)](https://doi.org/10.5281/zenodo.13992088) [![Documentation](https://img.shields.io/badge/Documentation-blue.svg)](https://broccolimicro.github.io/loom) [![Tests](https://github.com/broccolimicro/loom/actions/workflows/test.yml/badge.svg)](https://github.com/broccolimicro/loom/actions/workflows/test.yml) [![Release](https://github.com/broccolimicro/loom/actions/workflows/release.yml/badge.svg)](https://github.com/broccolimicro/loom/actions/workflows/release.yml)
+# Bok &nbsp; [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13992088.svg)](https://doi.org/10.5281/zenodo.13992088) [![Documentation](https://img.shields.io/badge/Documentation-blue.svg)](https://broccolimicro.github.io/bok) [![Tests](https://github.com/broccolimicro/bok/actions/workflows/test.yml/badge.svg)](https://github.com/broccolimicro/bok/actions/workflows/test.yml) [![Release](https://github.com/broccolimicro/bok/actions/workflows/release.yml/badge.svg)](https://github.com/broccolimicro/bok/actions/workflows/release.yml)
 
-Loom is a circuit compiler for a language called Weaver. The goal is to make it
+Bok is a circuit compiler for a language called Weaver. The goal is to make it
 easy to design complex computer architectures that are both performant and
 energy efficient.
 
-![LoomArchitecture](https://github.com/user-attachments/assets/5a34cbb4-41bf-492b-bc20-511102e78537)
+![BokArchitecture](https://github.com/user-attachments/assets/5a34cbb4-41bf-492b-bc20-511102e78537)
 
 ## Table of Contents
 1. [Install](#install)
@@ -16,14 +16,14 @@ energy efficient.
 <a name="install"></a>
 ## Install
 
-This install script downloads the appropriate binaries for your system and places them in `/usr/local` (or `C:\Program Files (x86)\Loom` on windows)
+This install script downloads the appropriate binaries for your system and places them in `/usr/local` (or `C:\Program Files (x86)\Bok` on windows)
 ```
-curl -sL https://raw.githubusercontent.com/broccolimicro/loom/refs/heads/main/install.sh | sudo bash
+curl -sL https://raw.githubusercontent.com/broccolimicro/bok/refs/heads/main/install.sh | sudo bash
 ```
 
 ## Examples
 
-Loom has two separate backends. One compiles from a data-level specification to
+Bok has two separate backends. One compiles from a data-level specification to
 verilog and the other compiles from a wire-level specification to QDI circuits
 in a spice netlist. On the frontend, these two backends are accessible through
 different "dialects". Below we show two different examples with these flows.
@@ -38,7 +38,7 @@ Start by creating your project directory and initializing your project.
 ```
 $ mkdir mychip
 $ cd mychip
-$ lm mod init mychip
+$ bok mod init mychip
 ```
 
 Then add `src/top.wv` with the following.
@@ -62,7 +62,7 @@ func split(chan C; chan L; chan A, B) {
 
 And then build your chip, creating `build/src/split.v` and `build/src/add.v`.
 ```
-$ lm build
+$ bok build
 ```
 
 <a name="protocol_example"></a>
@@ -118,9 +118,9 @@ proto wchb1b() : buffer {
 }
 ```
 
-You can list out the modules with `lm mod show`.
+You can list out the modules with `bok mod show`.
 ```
-$ lm mod show
+$ bok mod show
 buffer:buffer(chan,chan)
 buffer:wchb1b()
 top:add(chan,chan,chan)
@@ -129,7 +129,7 @@ top:split(chan,chan,chan,chan)
 
 We can build just the wchb1b, producing `build/ckt/wchb1b.prs`.
 ```
-$ lm build "buffer:wchb1b()"
+$ bok build "buffer:wchb1b()"
 $ cat build/src/wchb1b.prs
 require driven, stable, noninterfering
 _Reset&L.t&R.e->v3- [keep]
@@ -156,12 +156,12 @@ v0->L.f'1-
 
 And you can keep doing that with each build result.
 ```
-$ lm build build/ckt/wchb1b.prs
+$ bok build build/ckt/wchb1b.prs
 ```
 
 Or we can build the whole project again, synthesizing a layout for the `wchb1b`.
 ```
-$ lm build
+$ bok build
 $ find build/
 build/
 build/src
@@ -191,8 +191,8 @@ sudo apt install ninja-build libqhull-dev libgraphviz-dev opencl-headers ocl-icd
 
 Clone the repository
 ```
-git clone https://github.com/broccolimicro/loom.git
-cd loom
+git clone https://github.com/broccolimicro/bok.git
+cd bok
 git submodule update --init --recursive
 ```
 
@@ -229,8 +229,8 @@ pacman -S --needed --noconfirm curl
 
 Clone the repository
 ```
-git clone https://github.com/broccolimicro/loom.git
-cd loom
+git clone https://github.com/broccolimicro/bok.git
+cd bok
 git submodule update --init --recursive
 ```
 
@@ -242,7 +242,7 @@ make windows
 Install
 ```
 ./install-local.sh
-export PATH="C:\\Program Files (x86)\\Loom\\bin:$PATH"
+export PATH="C:\\Program Files (x86)\\Bok\\bin:$PATH"
 ```
 
 ### Mac OS
@@ -254,8 +254,8 @@ brew install cmake ninja qhull graphviz curl opencl-headers opencl-clhpp-headers
 
 Clone the repository
 ```
-git clone https://github.com/broccolimicro/loom.git
-cd loom
+git clone https://github.com/broccolimicro/bok.git
+cd bok
 git submodule update --init --recursive
 ```
 

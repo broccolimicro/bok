@@ -51,7 +51,7 @@ MAINTAINER_NAME = "$(shell git config user.name)"
 MAINTAINER_EMAIL = "$(shell git config user.email)"
 
 all: lib
-	cp bin/ckt/lm .
+	cp bin/ckt/bok .
 
 version:
 	@git fetch --tags --no-recurse-submodules
@@ -59,40 +59,40 @@ version:
 	@git describe --tags --abbrev=0 | cut -c2- > VERSION
 
 linux: lib
-	mkdir -p lm-linux/usr/local/bin
-	cp bin/ckt/lm lm-linux/usr/local/bin
-	mkdir -p lm-linux/usr/local/share/
-	cp -r tech lm-linux/usr/local/share
-	mkdir -p lm-linux/DEBIAN
+	mkdir -p bok-linux/usr/local/bin
+	cp bin/ckt/bok bok-linux/usr/local/bin
+	mkdir -p bok-linux/usr/local/share/
+	cp -r tech bok-linux/usr/local/share
+	mkdir -p bok-linux/DEBIAN
 	mkdir -p debian
 	touch debian/control
-	echo "Package: loom" > lm-linux/DEBIAN/control
-	cat VERSION | sed 's/\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)/\1.\2-\3/g' | xargs -I{} echo "Version: {}" >> lm-linux/DEBIAN/control
-	echo "Section: base" >> lm-linux/DEBIAN/control
-	echo "Priority: optional" >> lm-linux/DEBIAN/control
-	echo "Architecture: amd64" >> lm-linux/DEBIAN/control
-	dpkg-shlibdeps -O lm-linux/usr/local/bin/lm | sed 's/.*Depends=/Depends: /g' >> lm-linux/DEBIAN/control
-	echo "Maintainer: $(MAINTAINER_NAME) <$(MAINTAINER_EMAIL)>" >> lm-linux/DEBIAN/control
-	echo "Description: Loom" >> lm-linux/DEBIAN/control
-	echo " A programming language for quasi-delay insensitive asynchronous circuits" >> lm-linux/DEBIAN/control
-	dpkg-deb --build --root-owner-group lm-linux
-	rm -rf debian lm-linux
+	echo "Package: bok" > bok-linux/DEBIAN/control
+	cat VERSION | sed 's/\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)/\1.\2-\3/g' | xargs -I{} echo "Version: {}" >> bok-linux/DEBIAN/control
+	echo "Section: base" >> bok-linux/DEBIAN/control
+	echo "Priority: optional" >> bok-linux/DEBIAN/control
+	echo "Architecture: amd64" >> bok-linux/DEBIAN/control
+	dpkg-shlibdeps -O bok-linux/usr/local/bin/bok | sed 's/.*Depends=/Depends: /g' >> bok-linux/DEBIAN/control
+	echo "Maintainer: $(MAINTAINER_NAME) <$(MAINTAINER_EMAIL)>" >> bok-linux/DEBIAN/control
+	echo "Description: Bok" >> bok-linux/DEBIAN/control
+	echo " A programming language for quasi-delay insensitive asynchronous circuits" >> bok-linux/DEBIAN/control
+	dpkg-deb --build --root-owner-group bok-linux
+	rm -rf debian bok-linux
 
 windows: lib
-	mkdir -p Loom/bin
-	mkdir -p Loom/share
-	cp bin/ckt/lm.exe Loom/bin/lm.exe
-	cp -r tech Loom/share/tech
-	ldd Loom/bin/lm.exe | grep "mingw64" | sed 's/.*\/mingw64/\/mingw64/g' | sed 's/ (.*$$//g' | xargs -I{} cp {} Loom/bin
-	zip -r lm-windows.zip Loom
-	rm -rf Loom
+	mkdir -p Bok/bin
+	mkdir -p Bok/share
+	cp bin/ckt/bok.exe Bok/bin/bok.exe
+	cp -r tech Bok/share/tech
+	ldd Bok/bin/bok.exe | grep "mingw64" | sed 's/.*\/mingw64/\/mingw64/g' | sed 's/ (.*$$//g' | xargs -I{} cp {} Bok/bin
+	zip -r bok-windows.zip Bok
+	rm -rf Bok
 
 macos: lib
-	mkdir -p lm-macos/bin
-	mkdir -p lm-macos/share
-	cp bin/ckt/lm lm-macos/bin/lm
-	cp -r tech lm-macos/share/tech
-	tar -czvf lm-macos.tar.gz lm-macos
+	mkdir -p bok-macos/bin
+	mkdir -p bok-macos/share
+	cp bin/ckt/bok bok-macos/bin/bok
+	cp -r tech bok-macos/share/tech
+	tar -czvf bok-macos.tar.gz bok-macos
 
 lib: gdstk
 	@$(foreach item,$(LIBS),echo "$(subst +, ,$(item))"; $(MAKE) VERSION="v$(shell cat VERSION)" -s $(MAKE_FLAGS) -C $(subst +, ,$(item));)
@@ -149,5 +149,5 @@ check:
 clean:
 	@$(foreach item,$(LIBS),echo "$(subst +, ,$(item))"; $(MAKE) -s $(MAKE_FLAGS) -C $(subst +, ,$(item)) clean;)
 ifeq ($(UNAME_S),Darwin)
-	rm -rf lm-macos lm-macos.tar.gz
+	rm -rf bok-macos bok-macos.tar.gz
 endif
