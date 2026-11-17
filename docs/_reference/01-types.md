@@ -8,7 +8,7 @@ layout: post
 
 ## Comments
 
-```weaver
+```choy
 // Single-line comment
 /* Multi
 line
@@ -17,7 +17,7 @@ comment */
 
 ## Imports
 
-```weaver
+```choy
 import "math"
 ```
 
@@ -25,7 +25,7 @@ import "math"
 
 Types specify how wires should be grouped into a bus. They allow you to organize related fields together.
 
-```weaver
+```choy
 type typeName {
     type1 field1
     type2 field2, field3
@@ -35,7 +35,7 @@ type typeName {
 
 The following is an example of a type definition to represent a CPU opcode.
 
-```weaver
+```choy
 type opcode {
     int<4> fn, rs, rt, rd
 }
@@ -48,19 +48,19 @@ if op.fn == 0 {
 
 Fields are accessed using the dot operator:
 
-```weaver
+```choy
 op.fn    // Access the fn field
 op.rs    // Access the rs field
 x.mybool // Access the mybool field
 ```
 
-Weaver has a small set of built-in types for representing hardware signals and data.
+Choy has a small set of built-in types for representing hardware signals and data.
 
 ### `wire`
 
 Represents a single wire with two potential values: `vdd` (high/logic 1) and `gnd` (low/logic 0).
 
-```weaver
+```choy
 var wire a, b, c, d, e
 a+        // vdd
 a-        // gnd
@@ -75,7 +75,7 @@ e = ~a    // ~gnd = vdd
 
 Represents a boolean value. Unlike `wire`, boolean values have three states: `true`, `false`, and `null` (invalid).
 
-```weaver
+```choy
 var bool a
 a = true
 a = false
@@ -86,7 +86,7 @@ a-  // null/invalid
 
 Represents a two's complement binary coded fixed-point value with specified width (in bits) and offset.
 
-```weaver
+```choy
 var fixed<16,-4> b
 b = 3.5
 b = 2
@@ -98,7 +98,7 @@ The offset determines the position of the binary point. For example, `fixed<16,-
 
 Aliased to `fixed<width, 0>` for convenience. Represents a signed integer.
 
-```weaver
+```choy
 var int<16> c
 c = 4
 c = 25
@@ -112,7 +112,7 @@ Represents an unsigned binary coded fixed-point value with specified width and o
 
 Aliased to `ufixed<width, 0>` for convenience. Represents an unsigned integer.
 
-```weaver
+```choy
 var uint<32> x
 x = 0
 x = 4294967295
@@ -122,26 +122,26 @@ x = 4294967295
 
 Represents a channel along which values of the specified type may be communicated between processes.
 
-```weaver
+```choy
 var chan<int<32>> A
 var chan<bool> B
 ```
 
 Sending blocks until the receiver calls receive:
 
-```weaver
+```choy
 A.send(5)
 ```
 
 Receive removes the value from the channel and allows the sender to proceed:
 
-```weaver
+```choy
 x = A.recv()
 ```
 
 Read the value without removing it (leaves value on channel, sender remains blocked):
 
-```weaver
+```choy
 x = A  // Peek at channel value
 ```
 
@@ -149,7 +149,7 @@ x = A  // Peek at channel value
 
 Declarations must be preceded by `var` if within a `func` or process body:
 
-```weaver
+```choy
 func example() int<32> {
     var int<32> x = 5
     var bool flag
@@ -159,7 +159,7 @@ func example() int<32> {
 
 Declarations in the argument list or return values for `func`, `struct`, or `type` need not be preceded by `var`.
 
-```weaver
+```choy
 func example(int<32> x, bool flag) int<32> {
     // x and flag are already declared
 }
@@ -167,7 +167,7 @@ func example(int<32> x, bool flag) int<32> {
 
 Arrays can be declared with dimensions:
 
-```weaver
+```choy
 var fixed<16,-4> a[3] = [1, 2, 3.5]
 var fixed<16,-4> b[4][2] = [[1, 2], [3, 4], [5, 6], [7, 8]]
 ```
@@ -178,7 +178,7 @@ Assignments may be composed in parallel or choice based on the `,` and `:` opera
 - `,` - Parallel assignment (all assignments happen simultaneously)
 - `:` - Choice assignment (only one assignment path is taken)
 
-```weaver
+```choy
 var fixed<16,-4> a[3] = [1, 2, 3.5], b[4][2] = [[1, 2], [3, 4], [5, 6], [7, 8]]
 var myType x = {1, true, 2.2}
 a[2] = 5, b[1][1] = 3 : x.mybool = false
@@ -208,9 +208,9 @@ Operators are listed in descending precedence (highest to lowest).
 
 ## Validity
 
-All variables in Weaver implicitly keep track of whether they store a valid value. A variable can be made invalid (null) using the `-` operator:
+All variables in Choy implicitly keep track of whether they store a valid value. A variable can be made invalid (null) using the `-` operator:
 
-```weaver
+```choy
 var fixed<16,-4> a, b
 a = 5    // a is valid
 b-       // b is null/invalid
@@ -229,7 +229,7 @@ Validity affects all operations. See [Validity and Truthiness]({{site.baseurl}}/
 
 All constants and compile-time expressions are arbitrary width and precision, but are implicitly cast by any assignment or operator with bounded width or precision.
 
-```weaver
+```choy
 var int<16> c
 c = 35 * 0.1  // 3.5 is then truncated to 3 because c is an integer
 ```

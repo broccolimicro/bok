@@ -6,7 +6,7 @@ date: 2026-01-14
 layout: post
 ---
 
-**Weaver’s mission is to help software engineers design complex hardware systems
+**Choy’s mission is to help software engineers design complex hardware systems
 without the need for deep hardware expertise.**
 
 ## Hardware Is Hard
@@ -46,16 +46,16 @@ everything is organized in memory over time is *dependant on the inputs of the
 program*. By definition, the compiler does not have enough information to
 untangle virtualization at compile time.
 
-## Introducing Weaver
+## Introducing Choy
 
-**Weaver is fundamentally sequential and physical.**
+**Choy is fundamentally sequential and physical.**
 
 It provides a sequential execution model that people can reason about while
 mapping directly to physical hardware.
 
 ![test]({{site.baseurl}}/images/bok.svg)
 
-Weaver looks and feels like a modern software language, abstracting the
+Choy looks and feels like a modern software language, abstracting the
 hardware-level semantics into a more familiar execution model. This drives
 several key design choices:
 
@@ -73,7 +73,7 @@ several key design choices:
 
 ## Hardware Semantics
 
-Weaver describes hardware, not software.
+Choy describes hardware, not software.
 
 - **Physical, not Virtual** - Functions, memory, and connections exist as real,
   concrete hardware elements. Resources are static, functions are inlined, and
@@ -84,27 +84,27 @@ Weaver describes hardware, not software.
 
 This has many downstream consequences. 
 
-- [**Validity, not Locks**](./01-validity-truthiness) - Weaver uses a lighter
+- [**Validity, not Locks**](./01-validity-truthiness) - Choy uses a lighter
   mechanism to manage distributed access shared resources.
 
-- [**Native Parallel Composition**](./02-composition) - Weaver provides native
+- [**Native Parallel Composition**](./02-composition) - Choy provides native
   operators and semantics to interleave sequential, parallel, and conditional
   execution safely.
 
-- [**Message Passing, not Shared Memory**](./03-processes) - In Weaver, computation is
+- [**Message Passing, not Shared Memory**](./03-processes) - In Choy, computation is
   expressed as long-lived processes rather than ephemeral software functions.
   Processes maintain state across time, communicate across channels, and execute
   continuously while the chip is powered.
 
 ## Balance of Power and Simplicity
 
-Because Weaver describes hardware, it is built up from semantics that are very
+Because Choy describes hardware, it is built up from semantics that are very
 different from software. As a result, there are many powerful low-level
 semantics in the language. However, those semantics are often both complex and
 complicated in extremely subtle ways.
 
-Weaver tries to balance expressive power with simplicity through abstraction.
-You may pick up Weaver and make it look like any other programming language.
+Choy tries to balance expressive power with simplicity through abstraction.
+You may pick up Choy and make it look like any other programming language.
 Or, with a healthy dose of psychodelics and masochism, you too can join us down
 the rabit hole of event semantics, timing models, handshake protocols,
 non-determinism, and the beautifully woven hyperdimensional fractal that is a
@@ -116,7 +116,7 @@ expertise.
 
 ## What This Means for You
 
-When designing with Weaver, keep these principles in mind:
+When designing with Choy, keep these principles in mind:
 
 1. **Think in hardware** - Your code describes physical circuits, not running programs.
 2. **Design top-down, Build bottom-up** - Understand the bigger picture,
@@ -127,6 +127,6 @@ When designing with Weaver, keep these principles in mind:
 4. **Minimize energy** - Avoid unnecessary work and take advantage of
   sparse or irregular data.
 
-Understanding these principles helps you write Weaver code that's not just
+Understanding these principles helps you write Choy code that's not just
 correct, but also clear, maintainable, and well-architected.
 

@@ -4,11 +4,11 @@ require 'rouge'
 
 module Rouge
 	module Lexers
-		class Weaver < RegexLexer
-			title "Weaver"
-			desc "Weaver / Bok language"
-			tag 'weaver'
-			filenames '*.wv', '*.weaver'
+		class Choy < RegexLexer
+			title "Choy"
+			desc "Choy / Bok language"
+			tag 'choy'
+			filenames '*.ch', '*.choy'
 
 			state :root do
 				# Line comments

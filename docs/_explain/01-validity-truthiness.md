@@ -21,9 +21,9 @@ different frequencies. Communication between them happens over asynchronous
 networks that are hard to reason about. Interfacing with analog systems or
 non-standard logic families often means falling back to black-box models.
 
-**Weaver takes a different approach.**
+**Choy takes a different approach.**
 
-Instead of starting with a clock, Weaver starts with the minimum timing
+Instead of starting with a clock, Choy starts with the minimum timing
 assumption needed to express computation at all. Stronger timing assumptions
 can then be added later. This allows the same program to target multiple
 backends, each with a different timing model.
@@ -32,13 +32,13 @@ In a clocked system, the clock answers a basic question for you: “Is this data
 valid right now?” If the answer is “no”, designers add explicit flow-control
 signals like valid-ready to handle stalls and backpressure.
 
-But Weaver does not assume a clock. So how do you say “this value isn’t ready
+But Choy does not assume a clock. So how do you say “this value isn’t ready
 yet” or “this computation hasn’t finished” without baking in a specific timing
 model?
 
 ## The Solution: Validity
 
-In Weaver, *every variable tracks whether it currently has a meaningful value.*
+In Choy, *every variable tracks whether it currently has a meaningful value.*
 - **Valid**: the variable holds a usable value
 - **Null**: the variable does not have a value (yet, or anymore)
 
@@ -48,7 +48,7 @@ For a software engineer, validity is similar to pointers. A pointer may be
 For a hardware engineer, validity is like the `valid` signal in a val-rdy or
 AXI-style interface. The data bus is only meaningful when valid is asserted.
 
-The key difference is that in Weaver, **this applies to every value**, not just
+The key difference is that in Choy, **this applies to every value**, not just
 channels or interfaces.
 
 For example, a `bool` has three possible states:
@@ -72,10 +72,10 @@ well-defined order. Parallelism exists, but only through heavy abstractions
 like threads, locks, shared memory, and cache coherence. In that world,
 validity is not used to coordinate access to shared resources.
 
-Weaver describes hardware.
+Choy describes hardware.
 
 In hardware, parallelism is the default, and it is extremely fine-grained.
-Signals are shared at the level of individual wires. Validity is how Weaver
+Signals are shared at the level of individual wires. Validity is how Choy
 coordinates access to those wires without locks, mutexes, or global ordering.
 
 Truthiness serves a different role.
@@ -87,7 +87,7 @@ Truthiness serves a different role.
 
 These are not the same question. For example,
 
-```weaver
+```choy
 var bool error_flag
 // ... later ...
 if error_flag {
@@ -101,7 +101,7 @@ meaningful result.
 If `error_flag` is `null`, the operation has not completed yet. It may still
 produce an error.
 
-By separating validity from truthiness, Weaver lets you distinguish between
+By separating validity from truthiness, Choy lets you distinguish between
 “false” and “not finished” without assuming anything about how long the
 operation takes.
 
@@ -136,7 +136,7 @@ are valid.
 Some operators are **disjunctive**: they may produce a valid
 result as soon as enough information is available. For example, in:
 
-```weaver
+```choy
 a == 0 || b == 0
 ```
 
@@ -159,13 +159,13 @@ valid.
 ## Conditioning on Validity vs Truthiness
 
 Suppose a process received a boolean over a channel.
-```weaver
+```choy
 var chan<bool> C
 ```
 
 If you want to act when the value is true, use an `if` statement to check
 **truthiness**.
-```weaver
+```choy
 if C {
 	count = count + 1
 }
@@ -173,14 +173,14 @@ if C {
 
 If you want to act when the value arrives, use an `await` statement to check
 **validity**.
-```weaver
+```choy
 await C {
 	count = count + 1
 }
 ```
 
 Internally, conditions are evaluated as a result of a transition on a single
-wire. Weaver uses two built-in functions.
+wire. Choy uses two built-in functions.
 
 - `valid(x)` evaluates to `vdd` when `x` is valid and `gnd` otherwise. `await
   x` waits for `valid(x)`
@@ -190,7 +190,7 @@ wire. Weaver uses two built-in functions.
 Most of the time, this happens automatically. You only need to be explicit when
 mixing validity and logic in complex expressions.
 
-```weaver
+```choy
 if valid(x) && y == 3 {
 	...
 }
@@ -198,7 +198,7 @@ if valid(x) && y == 3 {
 
 or
 
-```weaver
+```choy
 await x & true(y == 3) {
 	...
 }
@@ -208,7 +208,7 @@ await x & true(y == 3) {
 
 Validity also allows parallel processes to synchronize without locks.
 
-```weaver
+```choy
 var int<32> a, b, c
 a-, b-, c-
 (
@@ -227,7 +227,7 @@ a-, b-, c-
 
 This is equivalent to:
 
-```weaver
+```choy
 a = 5
 b = 3
 c = a + b
@@ -241,6 +241,6 @@ these actions safely in parallel.
 Without validity, this would require mutexes or explicit synchronization logic.
 With validity, coordination is implicit, local, and hardware-native.
 
-Validity is not just a feature of Weaver. It is the foundation that allows
+Validity is not just a feature of Choy. It is the foundation that allows
 parallel hardware behavior to be expressed clearly, safely, and without
 assuming a specific timing model.

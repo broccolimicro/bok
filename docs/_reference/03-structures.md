@@ -9,7 +9,7 @@ layout: post
 Structures describe circuit structure using production rules. Statements in a
 structure are inherently composed in parallel.
 
-```weaver
+```choy
 struct structureName(chan<type1> input1) chan<type2> output1 {
     // production rules
 }
@@ -18,7 +18,7 @@ struct structureName(chan<type1> input1) chan<type2> output1 {
 ## Production Rules
 
 Each statement follows the format of a production rule.
-```weaver
+```choy
 condition -> action
 ```
 
@@ -28,7 +28,7 @@ evaluate truthiness. If not specified, assumed to be `vdd` (always true).
 **Action** is either an assignment, a function call, or a process
 instantiation.
 
-```weaver
+```choy
 a & b -> x = 5
 z = x + y  // condition is vdd (always true)
 ```
@@ -39,7 +39,7 @@ The following example implements a single pipeline stage.
 - Clears output when both are not ready
 - Sets enable when output is not ready
 
-```weaver
+```choy
 struct buffer(chan<int<4>> L) chan<int<4>> R {
     R.e & L.r -> R.r = L.r
     R.r -> L.e-
@@ -53,7 +53,7 @@ We use the buffer to build a first-in-first-out queue.
 - Instantiates multiple buffer stages
 - Connects them in a chain to create a FIFO queue
 
-```weaver
+```choy
 struct fifo(chan<int<4>> L) chan<int<4>> R {
     var chan<int<4>> M[5]
     M[0] = L

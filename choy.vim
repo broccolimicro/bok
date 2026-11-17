@@ -1,5 +1,5 @@
 " Vim syntax file
-" Language:	Weaver
+" Language:	Choy
 " Maintainer:	Ned Bingham
 " Latest Revision: 26 April 2025
 

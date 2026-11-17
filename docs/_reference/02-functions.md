@@ -6,7 +6,7 @@ date: 2026-01-15
 layout: post
 ---
 
-`func` in Weaver can represent one of two things:
+`func` in Choy can represent one of two things:
 - a transient function that returns a value or values.
 - a persistent process that communicates across channels.
 
@@ -17,7 +17,7 @@ Functions have the following properties:
 - **No side effects**: Functions only affect their return values
 - **Inlined**: All functions are inlined by the compiler
 
-```weaver
+```choy
 func functionName(type1 arg1, arg2; type2 arg3) type3 arg4, arg5; type4 arg6 {
     // function body
 }
@@ -27,7 +27,7 @@ Return values are implicit. The value remaining on the return variable at the
 end of the function is returned. If no assignments are made to the return
 variable, its value remains unmodified. For example:
 
-```weaver
+```choy
 func sqrt(fixed<16,-4> x) fixed<16,-4> y {
     var fixed<16,-4> y1
 
@@ -50,7 +50,7 @@ func sqrt(fixed<16,-4> x) fixed<16,-4> y {
 
 In the example above, `y` is the return variable. Its final value is implicitly returned.
 
-```weaver
+```choy
 var fixed<16,-4> a, b
 a = 4
 b = sqrt(a)  // b receives the return value of sqrt(a)
@@ -61,7 +61,7 @@ b = sqrt(a)  // b receives the return value of sqrt(a)
 Processes represent one or more pipeline stages in your design. They are the
 primary mechanism for describing concurrent, stateful hardware behavior.
 
-```weaver
+```choy
 func processName(chan<type1> input1, input2; chan<type2> input3)
 	chan<type3> output1, output2; chan<type4> output3 {
     // reset statements
@@ -86,7 +86,7 @@ The following example shows a fetch unit in a CPU that:
 2. Waits for either a jump (`Jmp`) or increment (`Inc`) signal
 3. Updates `pc` accordingly and continues
 
-```weaver
+```choy
 func fetch(chan Inc, Jmp) chan Addr {
     var uint<32> pc = 0
     while {
@@ -110,7 +110,7 @@ func fetch(chan Inc, Jmp) chan Addr {
 `await` blocks program execution until the condition expression is valid. For a
 condition expression `cond`, `valid(cond)` must evaluate to `vdd`.
 
-```weaver
+```choy
 var fixed<16,-4> x
 x = 3
 await x {
@@ -120,7 +120,7 @@ await x {
 
 Can be used to wait for valid values on channels:
 
-```weaver
+```choy
 var chan<bool> A
 var chan<int<32>> B
 await A & B {
@@ -136,7 +136,7 @@ Think of `await` as waiting for an event to occur - a transition on a wire from 
 `if` blocks program execution until the condition expression is true. For a
 condition expression `cond`, `true(cond)` must evaluate to `vdd`.
 
-```weaver
+```choy
 var fixed<16,-4> x
 x = 3
 if x == 3 {
@@ -144,7 +144,7 @@ if x == 3 {
 }
 ```
 
-**Important**: The `if` statement in Weaver is **blocking** and there is **no
+**Important**: The `if` statement in Choy is **blocking** and there is **no
 `else`**. This is unlike if statements in any other language.
 
 ### `while` - Truthiness-Based Loop
@@ -152,7 +152,7 @@ if x == 3 {
 `while` loops are inherently truthy. The loop continues until the condition
 evaluates to `gnd` (false or null).
 
-```weaver
+```choy
 var uint<3> x = 0
 while x < 7 {
     x = x + 1
@@ -177,7 +177,7 @@ statements of any kind. Operators are listed in descending precedence.
 
 Statements in a function or process are inherently composed in sequence:
 
-```weaver
+```choy
 var int<32> a, b
 a = 5    // First
 b = 2    // Then
@@ -187,14 +187,14 @@ b = 2    // Then
 
 The `and` operator allows parallel execution:
 
-```weaver
+```choy
 var int<32> a, b
 a = 5 and b = 2  // a and b assigned in any order or simultaneously
 ```
 
 Parallel sequences may communicate with each other:
 
-```weaver
+```choy
 var int<32> a, b, c
 a-, b-, c-
 (
@@ -217,7 +217,7 @@ This uses validity-based communication instead of mutexes.
 
 The `or` operator allows only one path to proceed. If more than one path is unblocked, it causes an error (enforces deterministic behavior):
 
-```weaver
+```choy
 await A {
     A.recv()
 } or await B {
@@ -231,7 +231,7 @@ The channels `A` and `B` must be mutually exclusive - there must never be data o
 
 The `xor` operator allows only one path to proceed, but can exhibit non-deterministic behavior if multiple paths are unblocked (picks one arbitrarily):
 
-```weaver
+```choy
 await A {
     A.recv()
 } xor await B {
@@ -243,7 +243,7 @@ await A {
 
 `await`, `if`, `while`, and assignments may be composed in many ways:
 
-```weaver
+```choy
 await A {
     // ...
 } and if x < 3 {

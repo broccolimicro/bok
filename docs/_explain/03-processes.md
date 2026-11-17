@@ -6,7 +6,7 @@ date: 2026-01-15
 layout: post
 ---
 
-In Weaver, computation is expressed as **network of long-lived stateful
+In Choy, computation is expressed as **network of long-lived stateful
 processes**. This is a deliberate break from software languages, where
 computation is organized around short-lived function calls. This reflects a
 fundamental difference between hardware and software.
@@ -28,7 +28,7 @@ return, or the persistent state must be smuggled in through globals, implicit
 state machines, or a hidden scheduler that decides when the function "runs."
 All of these approaches obscure where state lives and when it changes.
 
-```weaver
+```choy
 func counter() chan<int<32>> out {
     var int<32> count = 0  // reset
     while {
@@ -41,7 +41,7 @@ func counter() chan<int<32>> out {
 Consider a simple counter that continuously produces values. There is no
 meaningful "return value" here, and no natural call boundary. The behavior is
 not a computation over time but a *presence over time*. By making this a
-process, Weaver forces persistence to be explicit and unavoidable. If something
+process, Choy forces persistence to be explicit and unavoidable. If something
 has state across time, it must be represented as a process. This removes
 ambiguity. Designers do not have to infer which variables persist, which reset,
 or which are shared across invocations. The structure of the program directly
@@ -79,7 +79,7 @@ scheduled again," as it would in software. It means "the physical conditions
 for transfer are not yet satisfied." The model describes constraints, not
 control flow.
 
-By rejecting shared memory and embracing channels, Weaver forces communication
+By rejecting shared memory and embracing channels, Choy forces communication
 to be explicit and local. If buffering, arbitration, or broadcast is needed, it
 must be constructed deliberately, either by the designer or by the compiler as
 a visible transformation. Time, storage, and causality are no longer hidden
@@ -87,7 +87,7 @@ behind a global abstraction.
 
 ## Synchronization, not Scheduling
 
-When there does need to be a shared resource, Weaver relies upon
+When there does need to be a shared resource, Choy relies upon
 synchronization across channels rather than locks. Locks, mutexes, and similar
 mechanisms exist to schedule access to shared state in software systems, where
 many independent threads are time-multiplexed onto a small number of execution
@@ -101,14 +101,14 @@ another can "take a turn." All components exist and operate simultaneously.
 If multiple components interact with the same resource, the resolution of that
 interaction must be expressed as logic, not as a policy enforced by a runtime.
 
-In Weaver, shared resources are therefore built as explicit processes that
+In Choy, shared resources are therefore built as explicit processes that
 mediate access through channels. Arbitration is not hidden behind a mutex; it
 is a piece of hardware with defined behavior. A client does not acquire a lock
 and enter a critical section. Instead, it synchronizes by sending a request and
 waiting for a response. Progress occurs only when the necessary communication
 can take place.
 
-```weaver
+```choy
 func arbiter(chan<Req> a, chan<Req> b) chan<Grant> out {
 	while {
 		await a {
@@ -127,7 +127,7 @@ can only proceed once its request has been serviced. The synchronization
 expresses *when* interaction is possible, not *who* owns the resource.
 
 By expressing coordination through synchronization rather than scheduling,
-Weaver keeps all contention explicit and structural. If access must be
+Choy keeps all contention explicit and structural. If access must be
 serialized, the serialization logic is visible. If fairness, priority, or
 throughput matter, they are properties of the arbitration process itself, not
 emergent behavior from a runtime scheduler. This makes shared resources easier

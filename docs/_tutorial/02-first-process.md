@@ -7,7 +7,7 @@ layout: post
 ---
 
 In this tutorial, you'll build a more complex process that receives data,
-processes it, and sends results. This demonstrates the core concepts of Weaver
+processes it, and sends results. This demonstrates the core concepts of Choy
 processes.
 
 ## What You'll Learn
@@ -26,7 +26,7 @@ Let's create a process that receives numbers and emits the entire Collatz sequen
 > [!WARNING]
 > Bok does not yet have a true type system or support for templates. There is only a very basic set of types with manual bitwidths at the moment: `chan`, `fixed`, `ufixed`, `bool`.
 
-```weaver
+```choy
 func Collatz(chan In, Out) {
 	var fixed value = 1
 	while {
@@ -80,9 +80,9 @@ top:Counter(chan)
 > [!WARNING]
 > Process instantiation is not yet functional, `top()` will be empty.
 
-Let's create a system that uses both a counter and our doubler. Update `top.wv`:
+Let's create a system that uses both a counter and our doubler. Update `top.ch`:
 
-```weaver
+```choy
 func Counter(chan Out) {
 	var fixed count = 0
 
@@ -181,7 +181,7 @@ which will create
 
 - **`In.recv()`** receives and removes data from a channel
 - **Processes can be composed** by connecting their channels
-- **Multiple processes run in parallel** in Weaver
+- **Multiple processes run in parallel** in Choy
 
 ## What's Next?
 

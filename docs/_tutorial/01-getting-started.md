@@ -1,25 +1,25 @@
 ---
-title: Getting Started with Weaver
+title: Getting Started with Choy
 category: Tutorials
 author: Edward Bingham
 date: 2026-01-15
 layout: post
 ---
 
-In this tutorial, you'll write your first Weaver program, set up a project, and
-learn the basics of the Weaver toolchain.
+In this tutorial, you'll write your first Choy program, set up a project, and
+learn the basics of the Choy toolchain.
 
 ## What You'll Learn
 
 - How to install Bok
-- How to set up a Weaver project
-- Basic Weaver syntax
+- How to set up a Choy project
+- Basic Choy syntax
 - How to compile and simulate your code
-- The structure of a simple Weaver program
+- The structure of a simple Choy program
 
 ## Step 1: Install Bok
 
-Bok is the circuit compiler for Weaver. Install it using the install script:
+Bok is the circuit compiler for Choy. Install it using the install script:
 
 ```bash
 curl -sL https://raw.githubusercontent.com/broccolimicro/bok/refs/heads/main/install.sh | bash
@@ -38,7 +38,7 @@ You should see the Bok help text with available commands.
 
 ## Step 2: Initialize a Project
 
-First, let's create a new Weaver project. Open a terminal and navigate to where
+First, let's create a new Choy project. Open a terminal and navigate to where
 you want to create your project:
 
 ```bash
@@ -51,15 +51,15 @@ This creates a new Bok module in the current directory.
 
 ## Step 3: Write Your First Program
 
-Create a file called `top.wv`:
+Create a file called `top.ch`:
 
 > [!WARNING]
 > Complex types are not yet supported. This is a currently working example, but it is not in-line with other documentation.
 >
 > TODO(edward.bingham) Update this example once the type system is in place.
 
-**top.wv**
-```weaver
+**top.ch**
+```choy
 func Counter(chan Out) {
 	var fixed count = 0
 	
@@ -95,13 +95,13 @@ wrapping back to 0 after 255.
 
 ## Step 4: Build Your Program
 
-Compile your Weaver program using Bok:
+Compile your Choy program using Bok:
 
 ```bash
 bok build
 ```
 
-By default, `bok build` looks for `top.wv` in the root directory of the project,
+By default, `bok build` looks for `top.ch` in the root directory of the project,
 which is the directory that contains `bok.mod`. This will:
 1. Parse your program
 2. Synthesize it into Verilog (for data-level specifications)
@@ -142,7 +142,7 @@ bok show "top:Counter(chan)"
 
 ## What's Next?
 
-You've created your first Weaver process! In the next tutorial, we'll:
+You've created your first Choy process! In the next tutorial, we'll:
 - Learn about receiving data on channels
 - Create processes that communicate with each other
 - Build more complex behaviors
@@ -155,6 +155,6 @@ Continue to [Building Your First Process](./first-process) to learn more.
 - **Channels** (`chan`) are used to send data between processes
 - **Function syntax**: `func name(chan Input1, Input2) chan Output` - input channels before return type, output channel as return type
 - **Variables** declared before the loop are initialized during reset
-- **`bok build`** compiles your Weaver code into hardware (looks for `top.wv` by default)
+- **`bok build`** compiles your Choy code into hardware (looks for `top.ch` by default)
 - **Output files** are placed in `build/rtl/` for Verilog or `build/ckt/` for production rules
 - **`bok mod show`** lists all modules and functions in your project

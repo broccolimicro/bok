@@ -21,8 +21,8 @@ In this final tutorial, you'll build a complete, functional circuit that combine
 
 We'll build a simple ALU (Arithmetic Logic Unit) component. First, let's define the types we'll need:
 
-```weaver
-// alu.weaver - A simple ALU implementation
+```choy
+// alu.choy - A simple ALU implementation
 
 // Operation type
 type opcode {
@@ -46,7 +46,7 @@ type alu_output {
 
 Now let's implement the ALU:
 
-```weaver
+```choy
 func alu(chan<alu_input> input) chan<alu_output> output {
     var alu_input in
     var alu_output out
@@ -85,7 +85,7 @@ func alu(chan<alu_input> input) chan<alu_output> output {
 
 Let's create a test process that feeds the ALU:
 
-```weaver
+```choy
 // Test harness that generates ALU operations
 func test_harness() chan<alu_input> alu_in {
     var alu_input test_input
@@ -130,7 +130,7 @@ func result_checker(chan<alu_output> alu_out) {
 
 Now let's wire everything together:
 
-```weaver
+```choy
 // Complete ALU system
 func alu_system() {
     var chan<alu_input> test_to_alu
@@ -150,7 +150,7 @@ The `and` operator runs all three processes in parallel, with data flowing throu
 Compile your complete circuit:
 
 ```bash
-bok build alu.weaver
+bok build alu.choy
 ```
 
 If there are errors, check:
@@ -163,7 +163,7 @@ If there are errors, check:
 See the complete system structure:
 
 ```bash
-bok show alu.weaver -o alu-system.dot
+bok show alu.choy -o alu-system.dot
 ```
 
 Then render it:
@@ -177,7 +177,7 @@ dot -Tpng alu-system.dot -o alu-system.png
 Run a simulation to see the behavior:
 
 ```bash
-bok sim alu.weaver
+bok sim alu.choy
 ```
 
 ## Step 8: Understanding the Design
@@ -194,7 +194,7 @@ Let's break down what we built:
 
 ### Add a Register File
 
-```weaver
+```choy
 type register_file {
     int<16> regs[8]
 }
@@ -228,7 +228,7 @@ func register_file_unit(chan<alu_output> alu_out, chan<alu_input> feedback) {
 
 You can run multiple ALUs in parallel:
 
-```weaver
+```choy
 func parallel_alu_system() {
     var chan<alu_input> input1, input2
     var chan<alu_output> output1, output2
@@ -254,7 +254,7 @@ func parallel_alu_system() {
 
 ### Pattern: Request-Response
 
-```weaver
+```choy
 func server(chan<request> req, chan<response> resp) {
     var request r
     var response s
@@ -272,7 +272,7 @@ func server(chan<request> req, chan<response> resp) {
 
 ### Pattern: Pipeline with Feedback
 
-```weaver
+```choy
 func pipeline_with_feedback(chan<input> in, chan<output> out) {
     var chan<feedback> fb
     
@@ -285,7 +285,7 @@ func pipeline_with_feedback(chan<input> in, chan<output> out) {
 ## What You've Accomplished
 
 Congratulations! You've now:
-- Written Weaver processes
+- Written Choy processes
 - Used channels for communication
 - Defined custom types
 - Composed complete systems
@@ -297,7 +297,7 @@ Now that you've completed the tutorials:
 
 1. **Explore the Reference** - Deep dive into language features
 2. **Read How-to Guides** - Learn specific techniques
-3. **Study Explanations** - Understand the "why" behind Weaver
+3. **Study Explanations** - Understand the "why" behind Choy
 4. **Build Your Own** - Start designing your hardware!
 
 ## Additional Resources

@@ -1,15 +1,15 @@
 ---
-title: Weaver
+title: Choy
 author: Edward Bingham
 date: 2024-09-24  #TODO: 2026-01-16, but hacked to order correctly
 category: Language
 layout: post
 ---
 
-This document describes the desired minimal functionality for the Weaver language for
+This document describes the desired minimal functionality for the Choy language for
 v1.0.0 of Bok.
 
-Weaver is a hardware description language whose mission is to make it easy for
+Choy is a hardware description language whose mission is to make it easy for
 software engineers to design high-quality complex computer architectures. It
 balances three core building-blocks: Behavior, Structure, and Types.
 
@@ -28,7 +28,7 @@ Arguments are typically channels along which data is communicated. However,
 non-channel arguments may be used to represent shared variables in a more
 complex handshake. 
 
-```weaver
+```choy
 func fetch(chan Inc, Jmp) chan Addr {
 	var uint<32> pc = 0
 	while {
@@ -54,7 +54,7 @@ Functions terminate and have no side-effects other than the returned values.
 All functions are inlined, though the compiler may decide to time-multiplex the
 resulting circuitry across different function calls.
 
-```weaver
+```choy
 import "math"
 
 func sqrt(fixed<16,-4> x) fixed<16,-4> y {
@@ -82,7 +82,7 @@ fixed-point value `x`. The value remaining on `y` at the end of the function is
 implicitly returned. If no assignments are made on `y`, then the value of `b`
 in the following assignment will be left un-modified.
 
-```weaver
+```choy
 var fixed<16,-4> a, b
 a = 4
 b = sqrt(a)
@@ -90,7 +90,7 @@ b = sqrt(a)
 
 ### Built-in Types
 
-Weaver has a small set of built-in types:
+Choy has a small set of built-in types:
 - `wire` represents a single wire with two potential values `vdd` and `gnd`
 - `bool` represents a boolean value
 - `fixed<width, offset>` represents a two's complement binary coded fixed-point value with offset and width in bits
@@ -100,7 +100,7 @@ Weaver has a small set of built-in types:
 - `chan<type>` represents a channel along which values may be communicated
 
 **Wires** may be assigned to constant values or other wires
-```weaver
+```choy
 var wire a, b, c, d, e
 a+        // vdd
 a-        // gnd
@@ -113,7 +113,7 @@ e = ~a    // ~gnd = vdd
 
 **Bool**, **Fixed**, and **Int** encode basic kinds of data and may be assigned similarly.
 
-```weaver
+```choy
 var bool a
 var fixed<16,-4> b
 var int<16> c
@@ -129,26 +129,26 @@ All constants and compile-time expressions are arbitrary width and precision,
 but implicitly cast by any assignment or operator with bounded width or
 precision.
 
-```weaver
+```choy
 c = 35 * 0.1 // 3.5 is then truncated to 3 because c is an integer
 ```
 
 **Channels** allow you to communicate data between processes.
 
-```weaver
+```choy
 var chan A
 ```
 
 When sending a value, execution will block until the receiver on the other end
 calls receive.
 
-```weaver
+```choy
 A.send(5)
 ```
 
 Receive removes the value from the channel and allows the sender to proceed.
 
-```weaver
+```choy
 x = A.recv()
 ```
 
@@ -156,24 +156,24 @@ Alternatively, the receiver may read the value on the channel without executing
 a full receive. This leaves the value on the channel and the sender remains
 blocked.
 
-```weaver
+```choy
 x = A
 ```
 
 ### Validity and Truthiness
 
-Weaver is designed to make no implicit assumptions about timing other than the
+Choy is designed to make no implicit assumptions about timing other than the
 Isochronic Fork Assumption required by Quasi-Delay Insensitive design. However,
-Weaver may compile to different backends that introduce assumptions. For
-example, Weaver may compile to Verilog, making the clocked timing assumption in
-the process. This allows Weaver to generalize to many different types of
+Choy may compile to different backends that introduce assumptions. For
+example, Choy may compile to Verilog, making the clocked timing assumption in
+the process. This allows Choy to generalize to many different types of
 systems and behaviors by explicitly the necessary assumptions. To support this,
 we must introduce the concept of Validity.  
 
-All variables in Weaver implicitly keep track of whether they store a valid
+All variables in Choy implicitly keep track of whether they store a valid
 value. Below, `a` is valid, `b` is null.
 
-```weaver
+```choy
 var fixed a, b
 a = 5
 b-
@@ -182,7 +182,7 @@ b-
 This is separate from Truthiness, and boolean values have three different
 values. Below, `a` and `b` are both valid and `c` is null.
 
-```weaver
+```choy
 var bool a, b, c
 a = true
 b = false
@@ -222,7 +222,7 @@ Operators are listed in descending precedence.
 
 Keep in mind that validity affects every operator. The null state is represented by the wire-type `gnd`. For example
 
-```weaver
+```choy
 gnd + 5 = gnd
 5 + 5 = 10
 gnd && true = gnd
@@ -236,7 +236,7 @@ Assignments may be composed in parallel or choice based on the `,` and `:`
 operators. Declarations must be preceded by `var` if within a `func`.
 Declarations in the arg-list or return values need not be preceded by `var`.
 
-```weaver
+```choy
 var fixed<16,-4> a[3] = [1, 2, 3.5], b[4][2] = [[1, 2], [3, 4], [5, 6], [7, 8]]
 var myType x = {1, true, 2.2}
 a[2] = 5, b[1][1] = 3 : x.mybool = false
@@ -249,7 +249,7 @@ and truthiness. The first operates on validity. Await blocks program execution
 until the condition expression is valid. For a condition expression `cond`,
 `valid(cond)` must evaluate to `vdd`.
 
-```weaver
+```choy
 var fixed<16,-4> x
 x = 3
 await x {
@@ -259,7 +259,7 @@ await x {
 
 This may also be used to wait for a valid value on a channel.
 
-```weaver
+```choy
 var chan<bool> A
 var chan<int<32> > B
 await A & B {
@@ -275,7 +275,7 @@ The second operates on truthiness. If blocks program execution until the
 condition expression is true. For a condition expression `cond`, `true(cond)`
 must evaluate to `vdd`.
 
-```weaver
+```choy
 var fixed<16,-4> x
 x = 3
 if x == 3 {
@@ -283,13 +283,13 @@ if x == 3 {
 }
 ```
 
-Keep in mind that the if-statement in Weaver is blocking and there is no
+Keep in mind that the if-statement in Choy is blocking and there is no
 `else`. This is unlike if statements in any other language.
 
 While loops are inherently truthy, and the following example loops until
 `true(x < 7)` evaluates to `gnd`, which happens when `x` is `7`.
 
-```weaver
+```choy
 var uint<3> x = 0
 while x < 7 {
 	x = x + 1
@@ -314,17 +314,17 @@ As you have already seen in the previous examples, statements in a function or
 process are inherently composed in sequence. In the following example, `a` is
 assigned to `5`, **then** `b` is assigned to `2`.
 
-```weaver
+```choy
 var int<32> a, b
 a = 5
 b = 2
 ```
 
-Weaver also has parallel composition represented by the `and` operator. In the
+Choy also has parallel composition represented by the `and` operator. In the
 following example, `a` is assigned to `5` and `b` is assigned to `2` in any
 order or even simultaneously.
 
-```weaver
+```choy
 var int<32> a, b
 a = 5 and b = 2
 ```
@@ -333,7 +333,7 @@ Again, this is unlike any language, and this operator is heavily dependent upon
 the concept of validity instead of using mutexes. For example two parallel
 sequences may communicate with eachother.
 
-```weaver
+```choy
 var int<32> a, b, c
 a-, b-, c-
 (
@@ -353,7 +353,7 @@ a-, b-, c-
 The above is equivalent to the following, but this communication is key
 to creating more complex distributed behaviors.
 
-```weaver
+```choy
 a = 5
 b = 3
 c = a + b
@@ -370,7 +370,7 @@ In the following example, the channels `A` and `B` must be mutually exclusive.
 There must never be data on both `A` and `B` simultaneously. This enforces
 deterministic behavior.
 
-```weaver
+```choy
 await A {
 	A.recv()
 } or await B {
@@ -381,7 +381,7 @@ await A {
 However, with an `xor`, this program can exhibit non-deterministic behavior,
 picking one of the two sides arbitrarily.
 
-```weaver
+```choy
 await A {
 	A.recv()
 } xor await B {
@@ -391,7 +391,7 @@ await A {
 
 Await, if, while, and assignments may be composed in a myrad of ways.
 
-```weaver
+```choy
 await A {
 	...
 } and if x < 3 {
@@ -406,7 +406,7 @@ await A {
 
 Structures describe circuit structure. Statements in a structure are inherently composed in parallel.
 
-```weaver
+```choy
 struct buffer(chan<int<4> > L) chan<int<4> > R {
 	R.e & L.r -> R.r = L.r
 	R.r -> L.e-
@@ -444,7 +444,7 @@ z = x + y
 
 Types specify how data should be grouped into a bus.
 
-```weaver
+```choy
 type opcode {
 	int<4> fn, rs, rt, rd
 }

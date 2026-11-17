@@ -1,6 +1,6 @@
 # Bok &nbsp; [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13992088.svg)](https://doi.org/10.5281/zenodo.13992088) [![Documentation](https://img.shields.io/badge/Documentation-blue.svg)](https://broccolimicro.github.io/bok) [![Tests](https://github.com/broccolimicro/bok/actions/workflows/test.yml/badge.svg)](https://github.com/broccolimicro/bok/actions/workflows/test.yml) [![Release](https://github.com/broccolimicro/bok/actions/workflows/release.yml/badge.svg)](https://github.com/broccolimicro/bok/actions/workflows/release.yml)
 
-Bok is a circuit compiler for a language called Weaver. The goal is to make it
+Bok is a circuit compiler for a language called Choy. The goal is to make it
 easy to design complex computer architectures that are both performant and
 energy efficient.
 
@@ -41,7 +41,7 @@ $ cd mychip
 $ bok mod init mychip
 ```
 
-Then add `src/top.wv` with the following.
+Then add `src/top.ch` with the following.
 ```
 func add(chan A, B; chan S) {
 	while {
@@ -68,12 +68,12 @@ $ bok build
 <a name="protocol_example"></a>
 ### Protocol Example
 
-Now we're going to edit `src/top.wv` putting the following at the top.
+Now we're going to edit `src/top.ch` putting the following at the top.
 ```
 import "buffer"
 ```
 
-Then we can create a new file `src/buffer.wv` with the following.
+Then we can create a new file `src/buffer.ch` with the following.
 ```
 func buffer(chan L, R) {
 	while {
@@ -273,14 +273,14 @@ Install
 
 ```bash
 mkdir -p ~/.vim/syntax
-cp weaver.vim ~/.vim/syntax
+cp choy.vim ~/.vim/syntax
 ```
 
 Add this to `~/.vimrc`
 ```
-au BufRead,BufNewFile *.wv set filetype=weaver
-au BufRead,BufNewFile *.cog set filetype=weaver
-au! Syntax weaver source ~/.vim/syntax/weaver.vim
+au BufRead,BufNewFile *.ch set filetype=choy
+au BufRead,BufNewFile *.cog set filetype=choy
+au! Syntax choy source ~/.vim/syntax/choy.vim
 ```
 
 ### Run Tests

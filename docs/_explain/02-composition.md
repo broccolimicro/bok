@@ -12,14 +12,14 @@ every operation simultaneously. So, we cannot just hide parallelism
 behind implicit data-dependent concurrency or relegate it to a few special
 application domains.
 
-Weaver integrates sequencing, parallelism, and choice into a comprehensive
+Choy integrates sequencing, parallelism, and choice into a comprehensive
 composition model, **making the relationships between operations in hardware
 explicit**. This lets you reason about complex behaviors without hiding
 parallelism.
 
 ## The Four Composition Operators
 
-Weaver defines four core composition operators, each mapping naturally to
+Choy defines four core composition operators, each mapping naturally to
 hardware patterns:
 
 - **Sequential** (`;` or newline): execute one operation, then the next
@@ -44,7 +44,7 @@ correct result.
 
 For example:
 
-```weaver
+```choy
 a = 5
 b = 2
 c = a + b
@@ -60,7 +60,7 @@ when processes communicate or interact. Making parallelism explicit allows
 designers to reason about **coordination and communication** in a hardware
 system.
 
-```weaver
+```choy
 a = 5 and b = 2
 ```
 
@@ -94,13 +94,13 @@ can happen at the same time. This creates situations where more than one
 operation could be ready simultaneously, and the hardware must explicitly
 decide which one to handle first.
 
-Weaver separates these concepts with two distinct composition operators:
+Choy separates these concepts with two distinct composition operators:
 
 **Conditional composition (`or`)** - only one path will execute, and the
 programmer must guarantee that multiple paths are never ready at the same time.
 This enforces **deterministic behavior**.
 
-```weaver
+```choy
 await channelA {
 	// handle A
 } or await channelB {
@@ -115,7 +115,7 @@ simultaneously, it is a design error.
 if multiple are ready, the hardware chooses arbitrarily. This allows
 **non-deterministic selection**.
 
-```weaver
+```choy
 await requestA {
 	grantA+
 } xor await requestB {
@@ -128,7 +128,7 @@ protocols. In software, this kind of choice is often implicit, hidden behind
 which thread acquires a lock first. Hardware requires **fine-grained, explicit
 control**. The `xor` operator makes this behavior clear and analyzable.
 
-By separating conditional and choice composition, Weaver lets designers reason
+By separating conditional and choice composition, Choy lets designers reason
 about **mutual exclusion and arbitration** directly in the hardware model,
 rather than relying on hidden scheduling or implicit ordering. This explicit
 handling is essential for correct, predictable, and performant parallel
@@ -136,7 +136,7 @@ hardware.
 
 ## Why Composition is Separate from Timing
 
-In Weaver, composition defines **relationships between operations**, not
+In Choy, composition defines **relationships between operations**, not
 wall-clock durations. Sequential, parallel, conditional, and choice composition
 describe **causal and logical constraints**, leaving the actual timing to the
 compiler and backend. This separation achieves three goals:

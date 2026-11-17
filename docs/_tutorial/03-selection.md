@@ -1,5 +1,5 @@
 ---
-title: Selection and Choice in Weaver
+title: Selection and Choice in Choy
 category: Tutorials
 author: Edward Bingham
 date: 2026-01-18
@@ -7,7 +7,7 @@ layout: post
 ---
 
 In this tutorial, you'll learn how to control **which operations execute and
-when** using Weaver's selection and choice operators. We'll write executable
+when** using Choy's selection and choice operators. We'll write executable
 programs demonstrating `if`, `await`, `or`, and `xor`.
 
 ## What You'll Learn
@@ -19,8 +19,8 @@ programs demonstrating `if`, `await`, `or`, and `xor`.
 
 ## Step 1: Write a Deterministic Selection Program
 
-Create `select.wv`:
-```weaver
+Create `select.ch`:
+```choy
 func MergeOr(chan InA, InB, Out) {
 	while {
 		await InA {
@@ -65,9 +65,9 @@ error: mutual exclusion violation
 
 ## Step 4: Write a Non-Deterministic Choice Program
 
-Create `non_deterministic.wv`:
+Create `non_deterministic.ch`:
 
-```weaver
+```choy
 func NonDeterministic(chan ReqA, ReqB) {
 	while {
 		await ReqA {
@@ -98,9 +98,9 @@ Send requests on `ReqA` and `ReqB`:
 
 ## Step 6: Combine `await` with `if` and Parallel Composition
 
-Create `combined.wv`:
+Create `combined.ch`:
 
-```weaver
+```choy
 func Combined(chan In, Out, Flag) {
 	var fixed x = 0
 	
