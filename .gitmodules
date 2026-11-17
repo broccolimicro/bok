@@ -34,9 +34,9 @@
 [submodule "lib/interpret_prs"]
 	path = lib/interpret_prs
 	url = https://github.com/broccolimicro/interpret_prs.git
-[submodule "lib/parse_ucs"]
+[submodule "lib/parse_choy"]
 	path = lib/parse_choy
-	url = https://github.com/broccolimicro/parse_ucs.git
+	url = https://github.com/broccolimicro/parse_choy.git
 [submodule "lib/parse_dot"]
 	path = lib/parse_dot
 	url = https://github.com/broccolimicro/parse_dot.git
@@ -91,9 +91,9 @@
 [submodule "lib/parse_verilog"]
 	path = lib/parse_verilog
 	url = https://github.com/broccolimicro/parse_verilog.git
-[submodule "lib/weaver"]
+[submodule "lib/choy"]
 	path = lib/choy
-	url = https://github.com/broccolimicro/weaver.git
+	url = https://github.com/broccolimicro/choy.git
 [submodule "bin/studio"]
 	path = bin/studio
 	url = https://github.com/broccolimicro/studio.git
@@ -106,9 +106,9 @@
 [submodule "lib/interpret_gc"]
 	path = lib/interpret_gc
 	url = https://github.com/broccolimicro/interpret_gc.git
-[submodule "lib/interpret_wv"]
+[submodule "lib/interpret_choy"]
 	path = lib/interpret_choy
-	url = https://github.com/broccolimicro/interpret_wv.git
+	url = https://github.com/broccolimicro/interpret_choy.git
 [submodule "lib/verilog"]
 	path = lib/verilog
 	url = https://github.com/broccolimicro/verilog.git
