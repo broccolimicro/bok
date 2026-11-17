@@ -18,7 +18,7 @@ LIBS = \
 	lib/parse_gc \
 	lib/parse_chp \
 	lib/parse_cog \
-	lib/parse_ucs \
+	lib/parse_choy \
 	lib/parse_verilog \
 	lib/boolean \
 	lib/arithmetic \
@@ -31,7 +31,7 @@ LIBS = \
 	lib/gc \
 	lib/chp \
 	lib/flow \
-	lib/weaver \
+	lib/choy \
 	lib/interpret_boolean \
 	lib/interpret_arithmetic \
 	lib/interpret_phy \
@@ -42,7 +42,7 @@ LIBS = \
 	lib/interpret_gc \
 	lib/interpret_chp \
 	lib/interpret_flow \
-	lib/interpret_wv \
+	lib/interpret_choy \
 	bin/ckt
 
 COVERAGE_INFOS := $(LIBS:%=%/coverage_%*.info)
